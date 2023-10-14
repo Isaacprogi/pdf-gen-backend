@@ -1,7 +1,6 @@
 const pdf = require('html-pdf');
 const path = require('path');
 const { createCanvas } = require('canvas');
-const Chart = require('chart.js');
 const pdfTemplate = require('../document/document');
 const ChartModel = require('../models/Chart');
 const {cloudinary} = require('../config/cloudinaryConfig');
