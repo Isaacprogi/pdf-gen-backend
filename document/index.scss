@@ -1,0 +1,170 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin: 0 auto;
+    background: pink;
+    width: 595px;
+    min-height: 842px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+
+.holder {
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.graph-holder {
+    flex: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date {
+    font-size: 9px;
+    font-weight: 900;
+    color: #1463FF;
+}
+
+.report {
+    font-size: 9px;
+    font-weight: 900;
+    color: #090E24;
+}
+
+.left-over-page {
+    color: #626E99;
+}
+
+
+.street {
+    color: #090E24;
+    font-size: 9px;
+    font-weight: 900;
+}
+
+
+.chart-container {
+    width: max-content;
+    height: max-content;
+}
+
+.chart-container-header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.chart-header-text {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+
+.chart-line {
+    flex: 1;
+    background: linear-gradient(90deg, #005DFF 0%, #00A3FF 44.27%, #21DDFF 100%);
+}
+
+.chart-sub-container {
+    height: max-content;
+    border-radius: 12.3px;
+    overflow: hidden;
+    width: 100%;
+    background: #F2F4F5;
+}
+
+.chart-sub-container-header {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: #E8EEFB;
+}
+
+
+.chart-sub-container-header-text {
+    margin-left: .6rem;
+    font-size: 12px;
+    color: #1463FF;
+    font-weight: 500;
+}
+
+.chart-holder {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-right: 21px;
+    padding-left: 0px;
+}
+
+.y-text {
+    transform: rotate(270deg);
+    display: inline-block;
+}
+
+
+.chat-box {
+    border-radius: 1rem;
+    overflow: hidden;
+    width: 500px;
+    height: 225px;
+    background-color: white;
+}
+
+/* .red{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: yellow;
+    width: 100%;
+    flex: none;
+    height: 20px;
+
+}
+.blue{
+   background: blue;
+   height: 802px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+.green{
+  flex: none;
+  background-color: black;
+  height: 20px;
+} */

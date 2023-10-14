@@ -1,0 +1,25 @@
+{
+  "name": "pdf-generation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "canvas": "^2.11.2",
+    "cloudinary": "^1.41.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "html-pdf": "^3.0.1",
+    "mongoose": "^7.6.1",
+    "multer": "^1.4.5-lts.1",
+    "node-cache": "^5.1.2",
+    "puppeteer": "^21.3.8"
+  }
+}
