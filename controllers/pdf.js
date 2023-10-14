@@ -5,9 +5,8 @@ const pdfTemplate = require('../document/document');
 const ChartModel = require('../models/Chart');
 const {cloudinary} = require('../config/cloudinaryConfig');
 const fs = require('fs');
-const puppeteer = require('puppeteer');
-const NodeCache = require('node-cache');
-const pdfCache = new NodeCache();
+// const NodeCache = require('node-cache');
+// const pdfCache = new NodeCache();
 
 
 exports.createPdf = async (req, res, next) => {
