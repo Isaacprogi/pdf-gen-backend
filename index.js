@@ -5,8 +5,11 @@ const pdfRoutes = require('./routes/pdf')
 const connectDB = require('./db/db')
 const errorHandler = require('./middleware/errorHandler')
 
+
 const cors = require('cors')
 env.config()
+
+app.use(express.static('pdf'));
 
 app.use(express.json())
 
