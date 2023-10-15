@@ -4,7 +4,10 @@ const { createCanvas } = require('canvas');
 const pdfTemplate = require('../document/document');
 const ChartModel = require('../models/Chart');
 const {cloudinary} = require('../config/cloudinaryConfig');
-const fs = require('fs');
+const Chart = require('chart.js');
+
+
+// const fs = require('fs');
 // const NodeCache = require('node-cache');
 // const pdfCache = new NodeCache();
 
@@ -101,6 +104,7 @@ exports.createPdf = async (req, res, next) => {
             }
         });
     } catch (error) {
+        console.log(error)
         return next({ message: 'Error generating PDF' });
     }
 };
