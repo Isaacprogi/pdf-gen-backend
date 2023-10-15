@@ -73,23 +73,28 @@ exports.createPdf = async (req, res, next) => {
         const htmlContent = `<img src="${chartDataUrl}" />`;
         const template = pdfTemplate({ crime, htmlContent });
 
-      
-        pdf.create(template,{ format: 'A4' }).toFile(path.join(__dirname, '..', 'pdf', 'crime.pdf'), async (pdfError, pdfResponse) => {
-            if (pdfError) {
-                return next({ message: 'Error generating PDF' });
+
+
+        const pdfResponse = await new Promise((resolve, reject) => {
+            pdf.create(template, { format: 'A4' }).toFile(path.join(__dirname, '..', 'pdf', 'crime.pdf'), (pdfError, pdfResponse) => {
+              if (pdfError) {
+                reject(pdfError);
+              } else {
+                resolve(pdfResponse);
+              }
+            });
+          });
+          
+          const uploadedResponse = await cloudinary.uploader.upload(
+            path.join(__dirname, '..', 'pdf', 'crime.pdf'),
+            {
+              uploadpreset: 'real_assist',
+              resource_type: "raw",
             }
+          );
 
-            try {
-                const uploadedResponse = await cloudinary.uploader.upload(
-                    path.join(__dirname, '..', 'pdf', 'crime.pdf'),
-                    {
-                        uploadpreset: 'real_assist',
-                        resource_type: "raw"
-                        
-                    }
-                );
 
-                const { id, ...others } = chartData;
+          const { id, ...others } = chartData;
                 const chartModel = new ChartModel({
                     crime,
                     chartData: others,
@@ -100,11 +105,41 @@ exports.createPdf = async (req, res, next) => {
                 await chartModel.save();
 
                 // Return the PDF as a response
-                return res.status(200).sendFile(path.join(__dirname, '..', 'pdf', 'crime.pdf'));
-            } catch (error) {
-                return next({ message: 'Error uploading PDF' });
-            }
-        });
+                res.status(200).sendFile(path.join(__dirname, '..', 'pdf','crime.pdf'));
+
+      
+        // pdf.create(template,{ format: 'A4' }).toFile(path.join(__dirname, '..', 'pdf', 'crime.pdf'), async (pdfError, pdfResponse) => {
+        //     if (pdfError) {
+        //         return next({ message: 'Error generating PDF' });
+        //     }
+
+        //     try {
+        //         const uploadedResponse = await cloudinary.uploader.upload(
+        //             path.join(__dirname, '..', 'pdf', 'crime.pdf'),
+        //             {
+        //                 uploadpreset: 'real_assist',
+        //                 resource_type: "raw"
+                        
+        //             }
+        //         );
+
+        //         const { id, ...others } = chartData;
+        //         const chartModel = new ChartModel({
+        //             crime,
+        //             chartData: others,
+        //             url: uploadedResponse.url,
+        //             publicId: uploadedResponse.public_id
+        //         });
+
+        //         await chartModel.save();
+
+        //         // Return the PDF as a response
+        //         res.status(200).sendFile(path.join(__dirname, '..', 'pdf','crime.pdf'));
+        //     } catch (error) {
+        //         return next({ message: 'Error uploading PDF' });
+        //     }
+        // });
+
     } catch (error) {
         console.log(error)
         return next({ message: 'Error generating PDF' });
