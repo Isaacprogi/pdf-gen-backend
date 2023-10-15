@@ -4,7 +4,9 @@ const { createCanvas } = require('canvas');
 const pdfTemplate = require('../document/document');
 const ChartModel = require('../models/Chart');
 const {cloudinary} = require('../config/cloudinaryConfig');
-const Chart = require('chart.js');
+const { Chart,registerables } = require('chart.js');
+Chart.register(...registerables);
+
 
 
 // const fs = require('fs');
