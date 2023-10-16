@@ -1,6 +1,6 @@
 const time = require('../utils/time')
 
-module.exports =  ({htmlContent,crime})=> {
+module.exports =  ()=> {
 
    return `<!DOCTYPE html>
    <html lang="en">
@@ -242,14 +242,14 @@ module.exports =  ({htmlContent,crime})=> {
                <div class='chart-sub-container'>
                    <div class='chart-sub-container-header'>
                        <span class='chart-sub-container-header-text'>
-                           ${crime}
+                           {{crime}}
                        </span>
                    </div>
                    <div class='chart-holder'>
                        <span class='y-text'>Arrests</span>
    
                            <div class='chat-box'>
-                           ${htmlContent}
+                           {{htmlContent}}
                            </div>
    
                    </div>
