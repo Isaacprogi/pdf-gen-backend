@@ -37,8 +37,9 @@ exports.createPdf = async (req, res,next) => {
         };
 
         pdf.create(document, options)
-            .then(() => {
+            .then((data) => {
                 uploadToCloudinaryAndSaveToDatabase(crime,chartData,res,next);
+                res.status(200).json(data)
             })
             .catch((err) => {
                 console.log('Error generating PDF:', err);
