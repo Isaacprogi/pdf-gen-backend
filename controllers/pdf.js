@@ -1,4 +1,3 @@
-const pdf = require('pdf-creator-node');
 const fs = require('fs');
 const path = require('path');
 const ChartModel = require('../models/Chart');
@@ -7,6 +6,7 @@ const pdfTemplate = require('../document/document');
 const chart = require('../chart/chart')
 const { Chart, registerables } = require('chart.js');
 Chart.register(...registerables);
+const pdf = require('html-pdf')
 
 
 
@@ -14,43 +14,31 @@ exports.createPdf = async (req, res,next) => {
     const { crime, chartData } = req.body;
 
     try {
-        const template = fs.readFileSync(
-            path.join(__dirname, '..', 'template', 'template.html'),
-            'utf-8'
-        );
-
         const chartDataUrl = chart(chartData);
-
-        const options = {
-            format: 'A4',
-            orientation: 'portrait',
-            border: '10mm',
-        };
-
-        const document = {
-            html: template,
-            data: {
-                crime,
-                chartDataUrl,
-            },
-            path: path.join(__dirname, '..', 'pdf', 'crime.pdf'),
-        };
-
-        pdf.create(document, options)
-            .then((data) => {
-                uploadToCloudinaryAndSaveToDatabase(crime,chartData,res,next);
-                res.status(200).json(data)
-            })
-            .catch((err) => {
-                console.log('Error generating PDF:', err);
-                res.status(500).json({ error: 'PDF generation failed' });
-            });
+        const htmlContent = `<img src="${chartDataUrl}" />`;
+        pdf.create(pdfTemplate({ htmlContent, crime: chart?.crime }), { format: 'Letter', orientation: 'portrait' }).toFile('crime.pdf', (err) => {
+            if (err) {
+                res.status(500).send('Error generating PDF');
+            } else {
+                uploadToCloudinaryAndSaveToDatabase(crime, chartData, res, next);
+            }
+        });
           
     } catch (error) {
-        console.log('Error generating PDF:', err);
+        console.log('Error generating PDF:', error);
         res.status(400).json(error);
     }
 };
+
+
+
+
+  
+  
+  
+  
+  
+  
 
 
 
