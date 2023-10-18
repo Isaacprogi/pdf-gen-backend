@@ -10,26 +10,36 @@ const pdf = require('html-pdf')
 
 
 
-exports.createPdf = async (req, res,next) => {
+exports.createPdf = async (req, res, next) => {
     const { crime, chartData } = req.body;
 
     try {
         const chartDataUrl = chart(chartData);
         const htmlContent = `<img src="${chartDataUrl}" />`;
-        pdf.create(pdfTemplate({ htmlContent, crime: chart?.crime }), { format: 'Letter', orientation: 'portrait' }).toFile('crime.pdf', (err) => {
+
+        // Create the PDF as a buffer instead of saving to a file
+        pdf.create(pdfTemplate({ htmlContent, crime: crime }), { format: 'Letter', orientation: 'portrait' }).toBuffer(async (err, buffer) => {
             if (err) {
                 res.status(500).send('Error generating PDF');
             } else {
-                uploadToCloudinaryAndSaveToDatabase(crime, chartData, res, next);
+                // Instead of saving to a file, you can now work with the 'buffer'
+                // You can send the buffer in the response or do further processing here
+
+                // For example, if you want to send the PDF as a response
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'inline; filename=crime.pdf');
+                res.send(buffer);
+
+                // If you have additional tasks (e.g., uploading to Cloudinary and saving to the database), you can perform them here.
+
+                // uploadToCloudinaryAndSaveToDatabase(crime, chartData, res, next);
             }
         });
-          
     } catch (error) {
         console.log('Error generating PDF:', error);
         res.status(400).json(error);
     }
 };
-
 
 
 
