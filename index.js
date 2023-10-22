@@ -1,35 +1,24 @@
 const express = require('express')
 const app = express()
 const env = require('dotenv')
-const pdfRoutes = require('./routes/pdf')
+const chartRoutes = require('./routes/chart')
 const connectDB = require('./db/db')
 const errorHandler = require('./middleware/errorHandler')
-// const invoiceRoute = require('./routes/invoice')
-// const expressLayouts = require('express-ejs-layouts')
-const path = require('path')
-// const homeRoutes = require('./routes/home-routes')
-
-
 const cors = require('cors')
+
+
 env.config()
-
-
-// app.use(express.static(path.join(__dirname,'public')))
-// app.use(homeRoutes.routes)
-
-app.use(express.static('pdf'));
-
 app.use(express.json())
-// app.use(invoiceRoute)
 
-
-const port = process.env.PORT
 app.use(cors())
 app.use(errorHandler)
 
-app.use('/api/pdf',pdfRoutes)
+app.use('/api/chart',chartRoutes)
+
+const port = process.env.PORT
 
 connectDB(process.env.MONGO_URL)
+
 
 app.listen(port,()=>{
     console.log(`Server running on ${port}`)
